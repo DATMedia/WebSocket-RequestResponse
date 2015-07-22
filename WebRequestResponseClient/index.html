@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="mainModule">
+<head>
+  <title>WebRequestResponseClient</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="./css/bootstrap.css" />
+  <link rel="stylesheet" heft="./css/angular-csp.css" />
+</head>
+
+<body ng-controller="mainController">
+  <nav class="navbar navbar-top-static navbar-inverse">
+    <div class="navbar-header">
+      <div class="navbar-brand">
+        <a>Eneter Websocket Client</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <button ng-click="openConnection()" class="btn btn-default">Open Connection</button>
+    <button ng-click="closeConnection()" class="btn btn-default">Close Connection</button>
+    <button ng-click="sendRequestMessage()" class="btn btn-default">Send Message</button>
+  </div>
+  <div class="container">
+    {{ result }}
+  </div>
+
+
+  <script src="./js/jquery-2.1.4.js"></script>
+  <script src="./js/bootstrap.js"></script>
+  <script src="./js/angular.js"></script>
+  <script src="./js/eneter-messaging-6.5.0.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

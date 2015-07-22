@@ -126,6 +126,7 @@ namespace ServerApplication
                 // Note: ResponseReceiverId identifies the client who sent the request.
                 aResponseMessage.Result = aResult;
                 aReceiver.SendResponseMessage(e.ResponseReceiverId, aResponseMessage);
+                System.Threading.Thread.Sleep(100);
             }
 
         }
