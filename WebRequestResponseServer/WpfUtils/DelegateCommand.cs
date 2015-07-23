@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace WpfUtils
 {
-    public class DelegateCommand : ICommand
+    public sealed class DelegateCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
