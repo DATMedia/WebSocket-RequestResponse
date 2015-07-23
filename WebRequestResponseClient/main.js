@@ -11,8 +11,6 @@ var controller = module.controller("mainController", ["$scope", function($scope)
    var myPiSender = new DuplexTypedMessageSender();
     myPiSender.onResponseReceived = onResultReceived;
   
-  
-  $scope.welcomeMessage = "Hello World";
   $scope.openConnection = function() {
     var anOutputChannel = new WebSocketDuplexOutputChannel("ws://127.0.0.1:8091/PiCalculator/", null);
     myPiSender.attachDuplexOutputChannel(anOutputChannel);
