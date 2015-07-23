@@ -1,0 +1,101 @@
+MainThread:MainThread[t] "MainThread"
+/MainWindowViewModel:MainWindowViewModel "MainWindowViewModel"
+/DataContractJsonStringSerializer:DataContractJsonStringSerializer "DataContractJsonStringSerializer"
+/IDuplexTypedMessageReceiver:IDuplexTypedMessageReceiver "IDuplexTypedMessageReceiver"
+/DuplexTypedMessageFactory:DuplexTypedMessageFactory "DuplexTypedMessageFactory"
+/DuplexInputChannel:DuplexInputChannel "DuplexInputChannel"
+/WebSocketMessagingSystemFactory:WebSocketMessagingSystemFactory "WebSocketMessagingSystemFactory"
+ThreadPool:ThreadPool[t] "ThreadPool"
+/WebSocketDuplexOutputChannel:WebSocketDuplexOutputChannel "WebSocketDuplexOutputChannel"
+/DuplexTypedMessageSender:DuplexTypedMessageSender "DuplexTypedMessageSender"
+/MainController:MainController "MainController"
+AngularFramework:AngularFramework "AngularFramework"
+JavascriptEventLoop:JavascriptEventLoop[t] "JavascriptEventLoop"
+
+MainThread:MainWindowViewModel.new()
+MainThread:MainWindowViewModel.OpenServer()
+MainWindowViewModel:MainWindowViewModel.CreateReceiverFactory()
+MainWindowViewModel:DataContractJsonStringSerializer.new()
+MainWindowViewModel:DuplexTypedMessageFactory.new()
+MainWindowViewModel:DuplexTypedMessageFactory.CreateDuplexTypedMessageReceiver()
+DuplexTypedMessageFactory:IDuplexTypedMessageReceiver.new()
+MainWindowViewModel[1]:WebSocketMessagingSystemFactory.new()
+MainWindowViewModel:WebSocketMessagingSystemFactory.CreateDuplexInputChannel()
+WebSocketMessagingSystemFactory:DuplexInputChannel.new()
+MainWindowViewModel:IDuplexTypedMessageReceiver.AttachDuplexInputChannel
+MainThread:_
+JavascriptEventLoop:AngularFramework.init()
+AngularFramework:MainController.new()
+MainController:DuplexTypedMessageSender.new()
+JavascriptEventLoop:AngularFramework.handleEvent
+AngularFramework:MainController.openConnection
+MainController:WebSocketDuplexOutputChannel.new()
+MainController:DuplexTypedMessageSender.attachDuplexOutputChannel
+JavascriptEventLoop:_
+ThreadPool:DuplexInputChannel.ClientConnected;
+DuplexInputChannel:IDuplexTypedMessageReceiver.OnResponseReceiverConnected
+IDuplexTypedMessageReceiver:MainWindowViewModel.OnClientConnected
+ThreadPool:_
+JavascriptEventLoop:AngularFramework.onEvent
+AngularFramework:MainController.sendRequestMessage
+MainController:DuplexTypedMessageSender.sendRequestMessage
+JavascriptEventLoop:_
+ThreadPool:DuplexInputChannel.HandleMessage()
+DuplexInputChannel:IDuplexTypedMessageReceiver.OnRequestMessageReceived
+IDuplexTypedMessageReceiver:MainWindowViewModel.OnMessageReceived
+MainWindowViewModel:IDuplexTypedMessageReceiver.SendResponseMessage
+ThreadPool:_
+
+
+
+JavascriptEventLoop:AngularFramework.handleEvent()
+AngularFramework
+MainController:DuplexTypedMessageSender.new()
+AngularFramework:MainController.openConnection
+MainController:DuplexTypedMessageSender.new()
+JavascriptEventLoop:MainController.openConnection()
+MainController:WebSocketDuplexOutputChannel.new()
+WebSocketDuplexOutputChannel:EneterProtocolFormatter.new()
+MainController:DuplexBrokerClient.attachDuplexOutputChannel()
+DuplexBrokerClient:WebSocketDuplexOutputChannel.openConnection()
+WebSocketDuplexOutputChannel:WebSocket.new()
+JavascriptEventLoop:WebSocket.handleEvent()
+WebSocket:WebSocketDuplexOutputChannel.onopen
+WebSocketDuplexOutputChannel:EneterProtocolFormatter.encodeOpenConnectionMessage
+WebSocketDuplexOutputChannel:WebSocket.send(openConnection)
+SingleThreadExecutor:Program.ResponseReceiverConnected
+SingleThreadExecutor:_
+WebSocketDuplexOutputChannel:WebSocketDuplexOutputChannel.onConnectionOpened()
+JavascriptEventLoop:AngularFramework.handleEvent()
+AngularFramework:MainController.subscribe()
+MainController:DuplexBrokerClient.subscribe("MyCpuUpdate")
+DuplexBrokerClient:DuplexBrokerClient.getAttachedDuplexOutputChannel
+DuplexBrokerClient[1]:DuplexBrokerClient.send
+DuplexBrokerClient:BrokerCustomSerializer.serialize
+DuplexBrokerClient:WebSocketDuplexOutputChannel.sendMessage()
+WebSocketDuplexOutputChannel:EneterProtocolFormatter.encodeRequestMessage()
+WebSocketDuplexOutputChannel:WebSocket.send()
+JavascriptEventLoop:_
+Program:>Program.sendMonitoringMessages()
+Program:Broker.sendMessage("MyCpuUpdate", message)
+Program:stop
+Program:_
+JavascriptEventLoop:WebSocket._
+WebSocket:WebSocketDuplexOutputChannel.onmessage
+WebSocketDuplexOutputChannel:EneterProtocolFormatter.decodeMessage()
+WebSocketDuplexOutputChannel:DuplexBrokerClient._onResponseMessageReceived
+DuplexBrokerClient:BrokerCustomSerializer.deserialize
+DuplexBrokerClient:MainController.onBrokerMessageReceived
+JavascriptEventLoop:AngularFramework.handleEvent()
+AngularFramework:MainController.unsubscribe()
+MainController:DuplexBrokerClient.unsubscribe()
+DuplexBrokerClient:DuplexBrokerClient.getAttachedDuplexOutputChannel()
+DuplexBrokerClient[1]:DuplexBrokerClient.send()
+DuplexBrokerClient:BrokerCustomSerializer.serialize()
+DuplexBrokerClient:WebSocketDuplexOutputChannel.sendMessage()
+WebSocketDuplexOutputChannel:EneterProtocolFormatter.encodeRequestMessage
+WebSocketDuplexOutputChannel:WebSocket.send()
+JavascriptEventLoop:_
+Program[0,0]:Broker.DetachDuplexInputChannel()
+
+
