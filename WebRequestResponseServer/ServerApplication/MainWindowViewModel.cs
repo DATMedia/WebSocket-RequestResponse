@@ -44,8 +44,6 @@ namespace ServerApplication
 
         public void OpenServer()
         {
-
-
             _receiver = _receiverFactory.Value.CreateDuplexTypedMessageReceiver<PiResponseMessage, PiRequestMessage>();
             _receiver.MessageReceived += OnMessageReceived;
 
