@@ -1,9 +1,28 @@
 var module = angular.module("mainModule", []);
 
 var controller = module.controller("mainController", ["$scope", function($scope) {
-  
+
+  var chatMessage;
+  try{
+    var ProtoBuf = dcodeIO.ProtoBuf;
+    //message = ProtoBuf.loadProtoFile("chatMessage.proto").build("ChatMessage");
+
+    ProtoBuf.loadProtoFile("./protoBuf/chatMessage.proto", function (error, builder) {
+      if (error) {
+        $scope.result = error;
+        $scope.$apply();
+      } else {
+        chatMessage = builder.build("ChatMessage");
+      }
+    });
+  } catch (error) {
+    $scope.result = error;
+    $scope.$apply();
+  }
+
   function onResultReceived(typedResponseReceivedEventArgs) {
-    $scope.result = typedResponseReceivedEventArgs.ResponseMessage.Result;
+    var message = chatMessage.decode(typedResponseReceivedEventArgs.ResponseMessage);
+    $scope.result = message.Name;
     $scope.$apply();
     
   }
@@ -12,7 +31,7 @@ var controller = module.controller("mainController", ["$scope", function($scope)
     myPiSender.onResponseReceived = onResultReceived;
   
   $scope.openConnection = function() {
-    var anOutputChannel = new WebSocketDuplexOutputChannel("ws://127.0.0.1:8091/PiCalculator/", null);
+    var anOutputChannel = new WebSocketDuplexOutputChannel("ws://192.168.15.124:8091/", null);
     myPiSender.attachDuplexOutputChannel(anOutputChannel);
   };
   
@@ -21,9 +40,13 @@ var controller = module.controller("mainController", ["$scope", function($scope)
   };
   
   $scope.sendRequestMessage = function() {
-    var aRequestMessage = {
-      CalculationStep: 0.01
-    };
-    myPiSender.sendRequestMessage(aRequestMessage);
+    var message = new chatMessage();
+    message.setName($scope.sendText);
+    message.setDateTime(Date.now());
+    message.setText("Hello Eneter");
+
+    var messageInArrayBuffer = message.toArrayBuffer();
+
+    myPiSender.sendRequestMessage(messageInArrayBuffer);
   };
 }]);

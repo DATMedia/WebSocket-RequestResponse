@@ -18,13 +18,16 @@
   <div class="container">
     <button ng-click="openConnection()" class="btn btn-default">Open Connection</button>
     <button ng-click="closeConnection()" class="btn btn-default">Close Connection</button>
+    <input type="text" ng-model="sendText"/>
     <button ng-click="sendRequestMessage()" class="btn btn-default">Send Message</button>
   </div>
   <div class="container">
     {{ result }}
   </div>
 
-
+  <script src="js/Long.min.js"></script>
+  <script src="js/ByteBufferAB.min.js"></script>
+  <script src="js/ProtoBuf.js"></script>
   <script src="./js/jquery-2.1.4.js"></script>
   <script src="./js/bootstrap.js"></script>
   <script src="./js/angular.js"></script>

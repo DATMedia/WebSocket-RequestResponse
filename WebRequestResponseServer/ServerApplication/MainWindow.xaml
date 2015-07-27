@@ -20,8 +20,8 @@
                     <Setter Property="Margin" Value="3" />
                 </Style>
             </StackPanel.Resources>
-            <Button Command="{Binding OpenServerCommand}">Open Server</Button>
-            <Button Command="{Binding CloseServerCommand}">Close Server</Button>
+            <Button Command="{Binding OpenServerCommand}" IsEnabled="{Binding IsOpen}">Open Server</Button>
+            <Button Command="{Binding CloseServerCommand}" IsEnabled="{Binding IsClose}">Close Server</Button>
         </StackPanel>
         <ScrollViewer  Grid.Row="1">
             <ItemsControl ItemsSource="{Binding LogMessages}">

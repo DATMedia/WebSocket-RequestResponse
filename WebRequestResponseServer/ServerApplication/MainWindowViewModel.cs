@@ -14,6 +14,7 @@ using WpfUtils;
 using System.Windows.Threading;
 using System.Collections.ObjectModel;
 using Castle.DynamicProxy;
+using Eneter.ProtoBuf;
 
 namespace ServerApplication
 {
@@ -24,14 +25,28 @@ namespace ServerApplication
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        protected void OnPropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private bool _isOpen;
+        private bool _isClose;
+        public bool IsOpen { get { return _isOpen; } set { _isOpen = value; OnPropertyChanged("IsOpen"); } }
+
+        public bool IsClose { get { return _isClose; } set { _isClose = value; OnPropertyChanged("IsClose"); } }
 
         private IDuplexTypedMessagesFactory CreateReceiverFactory()
         {
-            ISerializer jsonSerializer = new DataContractJsonStringSerializer();
-            ISerializer wrappingSerializer = _proxyGenerator.CreateInterfaceProxyWithTarget<ISerializer>(jsonSerializer, this);
+            ISerializer protoBufSerializer = new ProtoBufSerializer();
+           
+           // ISerializer wrappingSerializer = _proxyGenerator.CreateInterfaceProxyWithTarget<ISerializer>(jsonSerializer, this);
 
 
-            return new DuplexTypedMessagesFactory(wrappingSerializer);
+            return new DuplexTypedMessagesFactory(protoBufSerializer);
         }
 
         private readonly Lazy<IDuplexTypedMessagesFactory> _receiverFactory;
@@ -39,12 +54,16 @@ namespace ServerApplication
         public MainWindowViewModel()
         {
             _receiverFactory = new Lazy<IDuplexTypedMessagesFactory>(CreateReceiverFactory);
+            IsOpen = true;
+            IsClose = false;
         }
-        private IDuplexTypedMessageReceiver<PiResponseMessage, PiRequestMessage> _receiver = null;
+        private IDuplexTypedMessageReceiver<ChatMessage, ChatMessage> _receiver = null;
 
         public void OpenServer()
         {
-            _receiver = _receiverFactory.Value.CreateDuplexTypedMessageReceiver<PiResponseMessage, PiRequestMessage>();
+            IsClose = true;
+            IsOpen = false;
+            _receiver = _receiverFactory.Value.CreateDuplexTypedMessageReceiver<ChatMessage, ChatMessage>();
             _receiver.MessageReceived += OnMessageReceived;
 
             _receiver.ResponseReceiverConnected += OnClientConnected;
@@ -54,7 +73,7 @@ namespace ServerApplication
             IMessagingSystemFactory messaging = new WebSocketMessagingSystemFactory();
 
             // Attach input channel and be able to receive request messages and send back response messages.
-            IDuplexInputChannel inputChannel = messaging.CreateDuplexInputChannel("ws://127.0.0.1:8091/PiCalculator/");
+            IDuplexInputChannel inputChannel = messaging.CreateDuplexInputChannel("ws://192.168.15.124:8091/");
             _receiver.AttachDuplexInputChannel(inputChannel);
 
         }
@@ -63,6 +82,8 @@ namespace ServerApplication
         {
             if (_receiver != null)
             {
+                IsClose = false;
+                IsOpen = true;
                 _receiver.DetachDuplexInputChannel();
                 _receiver = null;
             }
@@ -99,7 +120,7 @@ namespace ServerApplication
             LogMessage(String.Format("OnClientConnected: ResponseReceiverId = {0}, SenderAddress = {1}", e.ResponseReceiverId, e.SenderAddress));
         }
 
-        private void OnMessageReceived(object sender, TypedRequestReceivedEventArgs<PiRequestMessage> e)
+        private void OnMessageReceived(object sender, TypedRequestReceivedEventArgs<ChatMessage> e)
         {
             if (e.ReceivingError != null)
             {
@@ -107,25 +128,30 @@ namespace ServerApplication
                 return;
             }
         
-            LogMessage(String.Format("OnMessageReceived: ResponseReceiverId = {0}, SenderAddress = {1}, CalculationStep={2}", e.ResponseReceiverId, e.SenderAddress, e.RequestMessage?.CalculationStep)); ;
+           // LogMessage(String.Format("OnMessageReceived: ResponseReceiverId = {0}, SenderAddress = {1}, CalculationStep={2}", e.ResponseReceiverId, e.SenderAddress, e.RequestMessage?.CalculationStep)); ;
             // Get the receiver instance.
-            IDuplexTypedMessageReceiver<PiResponseMessage, PiRequestMessage> aReceiver = (IDuplexTypedMessageReceiver<PiResponseMessage, PiRequestMessage>)sender;
+            IDuplexTypedMessageReceiver<ChatMessage, ChatMessage> aReceiver = (IDuplexTypedMessageReceiver<ChatMessage, ChatMessage>)sender;
 
-            PiResponseMessage aResponseMessage = new PiResponseMessage();
+            ChatMessage aResponseMessage = new ChatMessage();
 
-            // Calculate PI and send back multiple response messages.
-            double aResult = 0.0;
-            double aDx = e.RequestMessage.CalculationStep;
-            for (double x = -1.0; x < 1.0; x += aDx)
-            {
-                aResult += 2 * Math.Sqrt(1 - x * x) * aDx;
+            //// Calculate PI and send back multiple response messages.
+            //double aResult = 0.0;
+            //double aDx = e.RequestMessage.CalculationStep;
+            //for (double x = -1.0; x < 1.0; x += aDx)
+            //{
+            //    aResult += 2 * Math.Sqrt(1 - x * x) * aDx;
 
-                // Send back the current result.
-                // Note: ResponseReceiverId identifies the client who sent the request.
-                aResponseMessage.Result = aResult;
-                aReceiver.SendResponseMessage(e.ResponseReceiverId, aResponseMessage);
-                System.Threading.Thread.Sleep(100);
-            }
+            //    // Send back the current result.
+            //    // Note: ResponseReceiverId identifies the client who sent the request.
+            //    aResponseMessage.Result = aResult;
+            //    aReceiver.SendResponseMessage(e.ResponseReceiverId, aResponseMessage);
+            //    System.Threading.Thread.Sleep(100);
+            //}
+
+            aResponseMessage.Name = "Hi " + e.RequestMessage.Name;
+            aResponseMessage.Text = "";
+            aResponseMessage.DateTime = 100;
+            aReceiver.SendResponseMessage(e.ResponseReceiverId, aResponseMessage);
 
         }
 

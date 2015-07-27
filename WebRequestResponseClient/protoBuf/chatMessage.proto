@@ -1,0 +1,5 @@
+message ChatMessage{
+required string Name = 1;
+required int64 DateTime = 2;
+required string Text = 3;
+}

@@ -389,8 +389,8 @@ function DuplexTypedMessageSender()
 
         try
         {
-            var aSerializedMessage = mySerializer.serialize(message);
-            this.getAttachedDuplexOutputChannel().sendMessage(aSerializedMessage);
+           // var aSerializedMessage = mySerializer.serialize(message);
+            this.getAttachedDuplexOutputChannel().sendMessage(message);
         }
         catch (err)
         {
@@ -409,7 +409,8 @@ function DuplexTypedMessageSender()
         try
         {
             // Deserialize incoming message.
-            anObject = mySerializer.deserialize(duplexChannelMessageEventArgs.Message);
+            //anObject = mySerializer.deserialize(duplexChannelMessageEventArgs.Message);
+            anObject = duplexChannelMessageEventArgs.Message;
         }
         catch (err)
         {
