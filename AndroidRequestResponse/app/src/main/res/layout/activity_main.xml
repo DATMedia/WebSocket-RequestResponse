@@ -42,4 +42,18 @@
             android:layout_weight="1"
             android:id="@+id/btnSend"/>
     </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TableLayout
+            android:id="@+id/logRows"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
+            android:layout_height="match_parent">
+
+        </TableLayout>
+    </ScrollView>
 </LinearLayout>

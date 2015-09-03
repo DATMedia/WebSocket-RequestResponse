@@ -1,27 +1,27 @@
 package com.datmedia.mediaplayer.androidrequestresponse;
 
+
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.method.CharacterPickerDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.Calendar;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import eneter.messaging.dataprocessing.serializing.ISerializer;
-import eneter.messaging.diagnostic.EneterTrace;
 import eneter.messaging.endpoints.typedmessages.*;
 import eneter.messaging.messagingsystems.messagingsystembase.*;
-import eneter.messaging.messagingsystems.tcpmessagingsystem.TcpMessagingSystemFactory;
 import eneter.messaging.messagingsystems.websocketmessagingsystem.WebSocketClient;
-import eneter.messaging.messagingsystems.websocketmessagingsystem.WebSocketMessage;
 import eneter.messaging.messagingsystems.websocketmessagingsystem.WebSocketMessagingSystemFactory;
 import eneter.net.system.EventHandler;
 import eneter.protobuf.ProtoBufSerializer;
@@ -29,20 +29,21 @@ import eneter.protobuf.ProtoBufSerializer;
 public class MainActivity extends Activity {
     private IDuplexTypedMessageSender<ProtocolBufferEntities.ChatMessage, ProtocolBufferEntities.ChatMessage> mSender;
 private WebSocketClient client;
-    TextView mNameTextview;
-    TextView mMessage;
-    Button mBtnSend;
-    Button mBtnOpenConnection;
-    Button mBtnCloseConnection;
+    @Bind(R.id.txtName) TextView mNameTextview;
+    @Bind(R.id.txtMessage) TextView mMessage;
+    @Bind(R.id.btnSend) Button mBtnSend;
+    @Bind(R.id.btnOpenConnection) Button mBtnOpenConnection;
+    @Bind(R.id.btnCloseConnection) Button mBtnCloseConnection;
+    @Bind(R.id.logRows) TableLayout mLogTable;
+
+    ArrayList<LogRow> logs = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mNameTextview = (TextView)findViewById(R.id.txtName);
-        mBtnSend = (Button)findViewById(R.id.btnSend);
-        mMessage = (TextView)findViewById(R.id.txtMessage);
-        mBtnOpenConnection = (Button)findViewById(R.id.btnOpenConnection);
-        mBtnCloseConnection = (Button)findViewById(R.id.btnCloseConnection);
+        ButterKnife.bind(this);
+
         mBtnCloseConnection.setEnabled(false);
 
         mBtnSend.setOnClickListener(new View.OnClickListener() {
@@ -61,26 +62,37 @@ private WebSocketClient client;
                 }
             }
         });
+    }
 
-        mBtnOpenConnection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openConnection();
-                mBtnOpenConnection.setEnabled(false);
-                mBtnCloseConnection.setEnabled(true);
-            }
-        });
+    public void addLog(String Level, String Message){
+        TableRow row = new TableRow(this);
+        row.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        mBtnCloseConnection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closeConnection();
-                mBtnOpenConnection.setEnabled(true);
-                mBtnCloseConnection.setEnabled(false);
-            }
-        });
+        TextView time = new TextView(this);
+        time.setText(Calendar.getInstance().toString());
+        row.addView(time);
 
+        TextView txtLevel = new TextView(this);
+        txtLevel.setText(Level);
+        row.addView(txtLevel);
 
+        TextView txtMessage = new TextView(this);
+        txtMessage.setText(Message);
+        row.addView(txtMessage);
+    }
+
+    @OnClick(R.id.btnOpenConnection)
+    public void OpenConnection(){
+        openConnection();
+        mBtnOpenConnection.setEnabled(false);
+        mBtnCloseConnection.setEnabled(true);
+    }
+
+    @OnClick(R.id.btnCloseConnection)
+    public void  CloseConnection(){
+        closeConnection();
+        mBtnOpenConnection.setEnabled(true);
+        mBtnCloseConnection.setEnabled(false);
     }
 
     private void openConnection(){
