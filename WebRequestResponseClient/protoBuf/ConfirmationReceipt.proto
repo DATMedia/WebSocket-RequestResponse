@@ -1,0 +1,4 @@
+package com.datmedia.mediaplayer.androidrequestresponse;
+message ConfirmationReceipt{
+required bytes ChallengeResponse = 1;
+}

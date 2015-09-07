@@ -9,7 +9,7 @@ public final class EnrollmentConfirmationOuterClass {
       com.google.protobuf.ExtensionRegistry registry) {
   }
   public interface EnrollmentConfirmationOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.datmedia.mediaplayer.androidrequestresponse.EnrollmentConfirmation)
+      // @@protoc_insertion_point(interface_extends:com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmation)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -22,20 +22,25 @@ public final class EnrollmentConfirmationOuterClass {
     int getDeviceId();
 
     /**
-     * <code>required bytes EncryptedChallenge = 2;</code>
+     * <code>required string EncryptedChallenge = 2;</code>
      */
     boolean hasEncryptedChallenge();
     /**
-     * <code>required bytes EncryptedChallenge = 2;</code>
+     * <code>required string EncryptedChallenge = 2;</code>
      */
-    com.google.protobuf.ByteString getEncryptedChallenge();
+    java.lang.String getEncryptedChallenge();
+    /**
+     * <code>required string EncryptedChallenge = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getEncryptedChallengeBytes();
   }
   /**
-   * Protobuf type {@code com.datmedia.mediaplayer.androidrequestresponse.EnrollmentConfirmation}
+   * Protobuf type {@code com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmation}
    */
   public static final class EnrollmentConfirmation extends
       com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:com.datmedia.mediaplayer.androidrequestresponse.EnrollmentConfirmation)
+      // @@protoc_insertion_point(message_implements:com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmation)
       EnrollmentConfirmationOrBuilder {
     // Use EnrollmentConfirmation.newBuilder() to construct.
     private EnrollmentConfirmation(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
@@ -54,7 +59,7 @@ public final class EnrollmentConfirmationOuterClass {
     }
 
     private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @Override
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
         getUnknownFields() {
       return this.unknownFields;
@@ -88,8 +93,9 @@ public final class EnrollmentConfirmationOuterClass {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              encryptedChallenge_ = input.readBytes();
+              encryptedChallenge_ = bs;
               break;
             }
           }
@@ -106,14 +112,14 @@ public final class EnrollmentConfirmationOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return EnrollmentConfirmationOuterClass.internal_static_com_datmedia_mediaplayer_androidrequestresponse_EnrollmentConfirmation_descriptor;
+      return com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.internal_static_com_datmedia_mediaplayer_messages_Enrollment_EnrollmentConfirmation_descriptor;
     }
 
-    protected FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return EnrollmentConfirmationOuterClass.internal_static_com_datmedia_mediaplayer_androidrequestresponse_EnrollmentConfirmation_fieldAccessorTable
+      return com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.internal_static_com_datmedia_mediaplayer_messages_Enrollment_EnrollmentConfirmation_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              EnrollmentConfirmation.class, Builder.class);
+              com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation.class, com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation.Builder.class);
     }
 
     public static com.google.protobuf.Parser<EnrollmentConfirmation> PARSER =
@@ -126,7 +132,7 @@ public final class EnrollmentConfirmationOuterClass {
       }
     };
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Parser<EnrollmentConfirmation> getParserForType() {
       return PARSER;
     }
@@ -148,23 +154,50 @@ public final class EnrollmentConfirmationOuterClass {
     }
 
     public static final int ENCRYPTEDCHALLENGE_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString encryptedChallenge_;
+    private java.lang.Object encryptedChallenge_;
     /**
-     * <code>required bytes EncryptedChallenge = 2;</code>
+     * <code>required string EncryptedChallenge = 2;</code>
      */
     public boolean hasEncryptedChallenge() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required bytes EncryptedChallenge = 2;</code>
+     * <code>required string EncryptedChallenge = 2;</code>
      */
-    public com.google.protobuf.ByteString getEncryptedChallenge() {
-      return encryptedChallenge_;
+    public java.lang.String getEncryptedChallenge() {
+      java.lang.Object ref = encryptedChallenge_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          encryptedChallenge_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string EncryptedChallenge = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getEncryptedChallengeBytes() {
+      java.lang.Object ref = encryptedChallenge_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        encryptedChallenge_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private void initFields() {
       deviceId_ = 0;
-      encryptedChallenge_ = com.google.protobuf.ByteString.EMPTY;
+      encryptedChallenge_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -191,7 +224,7 @@ public final class EnrollmentConfirmationOuterClass {
         output.writeInt32(1, deviceId_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, encryptedChallenge_);
+        output.writeBytes(2, getEncryptedChallengeBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -208,7 +241,7 @@ public final class EnrollmentConfirmationOuterClass {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, encryptedChallenge_);
+          .computeBytesSize(2, getEncryptedChallengeBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -216,59 +249,59 @@ public final class EnrollmentConfirmationOuterClass {
     }
 
     private static final long serialVersionUID = 0L;
-    @Override
-    protected Object writeReplace()
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
-    public static EnrollmentConfirmation parseFrom(
+    public static com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static EnrollmentConfirmation parseFrom(
+    public static com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static EnrollmentConfirmation parseFrom(byte[] data)
+    public static com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static EnrollmentConfirmation parseFrom(
+    public static com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static EnrollmentConfirmation parseFrom(java.io.InputStream input)
+    public static com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static EnrollmentConfirmation parseFrom(
+    public static com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static EnrollmentConfirmation parseDelimitedFrom(java.io.InputStream input)
+    public static com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static EnrollmentConfirmation parseDelimitedFrom(
+    public static com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static EnrollmentConfirmation parseFrom(
+    public static com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static EnrollmentConfirmation parseFrom(
+    public static com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -277,43 +310,43 @@ public final class EnrollmentConfirmationOuterClass {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(EnrollmentConfirmation prototype) {
+    public static Builder newBuilder(com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
 
-    @Override
+    @java.lang.Override
     protected Builder newBuilderForType(
-        BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
-     * Protobuf type {@code com.datmedia.mediaplayer.androidrequestresponse.EnrollmentConfirmation}
+     * Protobuf type {@code com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmation}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.datmedia.mediaplayer.androidrequestresponse.EnrollmentConfirmation)
-        EnrollmentConfirmationOrBuilder {
+        // @@protoc_insertion_point(builder_implements:com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmation)
+        com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmationOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return EnrollmentConfirmationOuterClass.internal_static_com_datmedia_mediaplayer_androidrequestresponse_EnrollmentConfirmation_descriptor;
+        return com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.internal_static_com_datmedia_mediaplayer_messages_Enrollment_EnrollmentConfirmation_descriptor;
       }
 
-      protected FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return EnrollmentConfirmationOuterClass.internal_static_com_datmedia_mediaplayer_androidrequestresponse_EnrollmentConfirmation_fieldAccessorTable
+        return com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.internal_static_com_datmedia_mediaplayer_messages_Enrollment_EnrollmentConfirmation_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                EnrollmentConfirmation.class, Builder.class);
+                com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation.class, com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation.Builder.class);
       }
 
-      // Construct using com.datmedia.mediaplayer.androidrequestresponse.EnrollmentConfirmationOuterClass.EnrollmentConfirmation.newBuilder()
+      // Construct using com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
 
       private Builder(
-          BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -329,7 +362,7 @@ public final class EnrollmentConfirmationOuterClass {
         super.clear();
         deviceId_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
-        encryptedChallenge_ = com.google.protobuf.ByteString.EMPTY;
+        encryptedChallenge_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
@@ -340,23 +373,23 @@ public final class EnrollmentConfirmationOuterClass {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return EnrollmentConfirmationOuterClass.internal_static_com_datmedia_mediaplayer_androidrequestresponse_EnrollmentConfirmation_descriptor;
+        return com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.internal_static_com_datmedia_mediaplayer_messages_Enrollment_EnrollmentConfirmation_descriptor;
       }
 
-      public EnrollmentConfirmation getDefaultInstanceForType() {
-        return EnrollmentConfirmation.getDefaultInstance();
+      public com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation getDefaultInstanceForType() {
+        return com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation.getDefaultInstance();
       }
 
-      public EnrollmentConfirmation build() {
-        EnrollmentConfirmation result = buildPartial();
+      public com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation build() {
+        com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public EnrollmentConfirmation buildPartial() {
-        EnrollmentConfirmation result = new EnrollmentConfirmation(this);
+      public com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation buildPartial() {
+        com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation result = new com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -373,21 +406,23 @@ public final class EnrollmentConfirmationOuterClass {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof EnrollmentConfirmation) {
-          return mergeFrom((EnrollmentConfirmation)other);
+        if (other instanceof com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation) {
+          return mergeFrom((com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(EnrollmentConfirmation other) {
-        if (other == EnrollmentConfirmation.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation other) {
+        if (other == com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation.getDefaultInstance()) return this;
         if (other.hasDeviceId()) {
           setDeviceId(other.getDeviceId());
         }
         if (other.hasEncryptedChallenge()) {
-          setEncryptedChallenge(other.getEncryptedChallenge());
+          bitField0_ |= 0x00000002;
+          encryptedChallenge_ = other.encryptedChallenge_;
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -409,11 +444,11 @@ public final class EnrollmentConfirmationOuterClass {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        EnrollmentConfirmation parsedMessage = null;
+        com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (EnrollmentConfirmation) e.getUnfinishedMessage();
+          parsedMessage = (com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass.EnrollmentConfirmation) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -456,23 +491,51 @@ public final class EnrollmentConfirmationOuterClass {
         return this;
       }
 
-      private com.google.protobuf.ByteString encryptedChallenge_ = com.google.protobuf.ByteString.EMPTY;
+      private java.lang.Object encryptedChallenge_ = "";
       /**
-       * <code>required bytes EncryptedChallenge = 2;</code>
+       * <code>required string EncryptedChallenge = 2;</code>
        */
       public boolean hasEncryptedChallenge() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required bytes EncryptedChallenge = 2;</code>
+       * <code>required string EncryptedChallenge = 2;</code>
        */
-      public com.google.protobuf.ByteString getEncryptedChallenge() {
-        return encryptedChallenge_;
+      public java.lang.String getEncryptedChallenge() {
+        java.lang.Object ref = encryptedChallenge_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            encryptedChallenge_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>required bytes EncryptedChallenge = 2;</code>
+       * <code>required string EncryptedChallenge = 2;</code>
        */
-      public Builder setEncryptedChallenge(com.google.protobuf.ByteString value) {
+      public com.google.protobuf.ByteString
+          getEncryptedChallengeBytes() {
+        java.lang.Object ref = encryptedChallenge_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          encryptedChallenge_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string EncryptedChallenge = 2;</code>
+       */
+      public Builder setEncryptedChallenge(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -482,7 +545,7 @@ public final class EnrollmentConfirmationOuterClass {
         return this;
       }
       /**
-       * <code>required bytes EncryptedChallenge = 2;</code>
+       * <code>required string EncryptedChallenge = 2;</code>
        */
       public Builder clearEncryptedChallenge() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -490,8 +553,21 @@ public final class EnrollmentConfirmationOuterClass {
         onChanged();
         return this;
       }
+      /**
+       * <code>required string EncryptedChallenge = 2;</code>
+       */
+      public Builder setEncryptedChallengeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        encryptedChallenge_ = value;
+        onChanged();
+        return this;
+      }
 
-      // @@protoc_insertion_point(builder_scope:com.datmedia.mediaplayer.androidrequestresponse.EnrollmentConfirmation)
+      // @@protoc_insertion_point(builder_scope:com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmation)
     }
 
     static {
@@ -499,14 +575,14 @@ public final class EnrollmentConfirmationOuterClass {
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:com.datmedia.mediaplayer.androidrequestresponse.EnrollmentConfirmation)
+    // @@protoc_insertion_point(class_scope:com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmation)
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_datmedia_mediaplayer_androidrequestresponse_EnrollmentConfirmation_descriptor;
+    internal_static_com_datmedia_mediaplayer_messages_Enrollment_EnrollmentConfirmation_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_datmedia_mediaplayer_androidrequestresponse_EnrollmentConfirmation_fieldAccessorTable;
+      internal_static_com_datmedia_mediaplayer_messages_Enrollment_EnrollmentConfirmation_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -515,11 +591,11 @@ public final class EnrollmentConfirmationOuterClass {
   private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    String[] descriptorData = {
-      "\n\034EnrollmentConfirmation.proto\022/com.datm" +
-      "edia.mediaplayer.androidrequestresponse\"" +
-      "F\n\026EnrollmentConfirmation\022\020\n\010DeviceId\030\001 " +
-      "\002(\005\022\032\n\022EncryptedChallenge\030\002 \002(\014"
+    java.lang.String[] descriptorData = {
+      "\n\034EnrollmentConfirmation.proto\022,com.datm" +
+      "edia.mediaplayer.messages.Enrollment\"F\n\026" +
+      "EnrollmentConfirmation\022\020\n\010DeviceId\030\001 \002(\005" +
+      "\022\032\n\022EncryptedChallenge\030\002 \002(\t"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -533,12 +609,12 @@ public final class EnrollmentConfirmationOuterClass {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_com_datmedia_mediaplayer_androidrequestresponse_EnrollmentConfirmation_descriptor =
+    internal_static_com_datmedia_mediaplayer_messages_Enrollment_EnrollmentConfirmation_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_com_datmedia_mediaplayer_androidrequestresponse_EnrollmentConfirmation_fieldAccessorTable = new
+    internal_static_com_datmedia_mediaplayer_messages_Enrollment_EnrollmentConfirmation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_com_datmedia_mediaplayer_androidrequestresponse_EnrollmentConfirmation_descriptor,
-        new String[] { "DeviceId", "EncryptedChallenge", });
+        internal_static_com_datmedia_mediaplayer_messages_Enrollment_EnrollmentConfirmation_descriptor,
+        new java.lang.String[] { "DeviceId", "EncryptedChallenge", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

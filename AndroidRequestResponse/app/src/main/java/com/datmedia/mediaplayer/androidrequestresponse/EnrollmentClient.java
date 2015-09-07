@@ -2,6 +2,7 @@ package com.datmedia.mediaplayer.androidrequestresponse;
 
 import com.datmedia.mediaplayer.messages.Enrollment.ConfirmationReceiptOuterClass;
 import com.datmedia.mediaplayer.messages.Enrollment.EnrollmentConfirmationOuterClass;
+import com.datmedia.mediaplayer.messages.Enrollment.InitialRequestOuterClass;
 import com.datmedia.mediaplayer.messages.Enrollment.InitialResponseOuterClass;
 import com.datmedia.mediaplayer.messages.Enrollment.PublicKeyOuterClass;
 import com.datmedia.mediaplayer.messages.Enrollment.RequestContentsOuterClass;
@@ -9,14 +10,7 @@ import com.datmedia.mediaplayer.messages.Enrollment.ResponseContentsOuterClass;
 import com.datmedia.mediaplayer.messages.MessageOuterClass;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
-
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 
 public class EnrollmentClient {
@@ -35,11 +29,25 @@ public class EnrollmentClient {
     }
 
 
-    public void beginEnrollment(){
+    public void beginEnrollment() throws Exception {
+        InitialRequestOuterClass.InitialRequest initialRequest = InitialRequestOuterClass.InitialRequest.newBuilder()
+                                                                                                        .setDevicePlatform(InitialRequestOuterClass.DevicePlatform.Android)
+                                                                                                        .setDevicePublicKey(ByteString.copyFrom(mClientCryptoServiceProvider.getPublicKey().toByteArray()))
+                                                                                                        .build();
+
+        RequestContentsOuterClass.RequestContents requestContents = RequestContentsOuterClass.RequestContents.newBuilder()
+                                                                                                             .setRequestType(RequestContentsOuterClass.RequestType.InitialRequest)
+                                                                                                             .setData(ByteString.copyFrom(initialRequest.toByteArray()))
+                                                                                                             .build();
+
+        mSendMessage.sendMessage(MessageOuterClass.Message.newBuilder()
+                                                          .setMessageType(MessageOuterClass.MessageType.EnrollmentRequest)
+                                                          .setMessageContents(ByteString.copyFrom(requestContents.toByteArray()))
+                                                          .build());
 
     }
 
-    public void handleEnrollmentResponse(byte[] enrollmentResponseContentsSerialized) throws InvalidProtocolBufferException, InvalidKeySpecException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException {
+    public void handleEnrollmentResponse(byte[] enrollmentResponseContentsSerialized) throws Exception {
         ResponseContentsOuterClass.ResponseContents contents = ResponseContentsOuterClass.ResponseContents.parseFrom(enrollmentResponseContentsSerialized);
 
         if(contents != null){
@@ -51,11 +59,11 @@ public class EnrollmentClient {
         }
     }
 
-    private void handleEnrollmentConfirmation(ByteString data) throws InvalidProtocolBufferException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
+    private void handleEnrollmentConfirmation(ByteString data) throws Exception {
         EnrollmentConfirmationOuterClass.EnrollmentConfirmation enrollmentConfirmation = EnrollmentConfirmationOuterClass.EnrollmentConfirmation.parseFrom(data.toByteArray());
         mEnrollmentCompleted.enrollmentCompleted(enrollmentConfirmation.getDeviceId());
 
-        byte[] decryptChallenge = mClientCryptoServiceProvider.DecryptUsingPrivateKey(enrollmentConfirmation.getEncryptedChallenge().toByteArray());
+        byte[] decryptChallenge = mClientCryptoServiceProvider.DecryptUsingPrivateKey(enrollmentConfirmation.getEncryptedChallenge());
 
         byte[] encryptedResponse = mClientCryptoServiceProvider.EncryptUsingServerKey(decryptChallenge);
 

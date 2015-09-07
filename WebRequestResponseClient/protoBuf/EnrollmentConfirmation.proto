@@ -1,0 +1,5 @@
+package com.datmedia.mediaplayer.messages.Enrollment;
+message EnrollmentConfirmation{
+required int32 DeviceId = 1;
+required string EncryptedChallenge = 2;
+}

@@ -1,5 +1,7 @@
 package com.datmedia.mediaplayer.androidrequestresponse;
 
+import android.util.Base64;
+
 import com.datmedia.mediaplayer.messages.Enrollment.PublicKeyOuterClass;
 import com.google.protobuf.ByteString;
 
@@ -12,6 +14,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
+import java.util.Date;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -31,8 +35,8 @@ public class ClientCryptoServiceProvider {
         mKeyPairGenerator.initialize(1024);
         mKeyPair = mKeyPairGenerator.genKeyPair();
         mFactory = KeyFactory.getInstance("RSA");
-        mCipherEncrypt = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
-        mCipherDecrypt = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+        mCipherEncrypt = Cipher.getInstance("RSA/NONE/OAEPWithSHA1AndMGF1Padding");
+        mCipherDecrypt = Cipher.getInstance("RSA/NONE/OAEPWithSHA1AndMGF1Padding");
     }
 
     public PublicKeyOuterClass.PublicKey getPublicKey() throws InvalidKeySpecException {
@@ -57,28 +61,9 @@ public class ClientCryptoServiceProvider {
         return  mCipherEncrypt.doFinal(data);
     }
 
-    public byte[] DecryptUsingPrivateKey(final byte[] encryptedBytes) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    public byte[] DecryptUsingPrivateKey(final String encryptedBytes) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        byte[] rsaTemp = Base64.decode(encryptedBytes, Base64.NO_PADDING | Base64.NO_WRAP);
         mCipherDecrypt.init(Cipher.DECRYPT_MODE, mKeyPair.getPrivate());
-        return  mCipherDecrypt.doFinal(encryptedBytes);
+        return  mCipherDecrypt.doFinal(ByteHelper.removeLeadingZero(rsaTemp));
     }
-
-//    public byte[] convertCSharpRSAParameter(PublicKeyOuterClass.PublicKey publicKeyFromServer, byte[] data) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-//        BigInteger modulus = new BigInteger(1, publicKeyFromServer.getModules().toByteArray());
-//        BigInteger exponent = new BigInteger(1, publicKeyFromServer.getExponent().toByteArray());
-//
-//        RSAPublicKeySpec rsaPublicKeySpec = new RSAPublicKeySpec(modulus, exponent);
-//        KeyFactory factory = KeyFactory.getInstance("RSA");
-//
-//        PublicKey publicKey = factory.generatePublic(rsaPublicKeySpec);
-//
-//        factory.getKeySpec(publicKey, RSAPublicKeySpec.class);
-//
-//        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
-//        cipher.init(Cipher.DECRYPT_MODE, publicKey);
-//
-//        return cipher.doFinal(data);
-//
-//    }
-
-
 }

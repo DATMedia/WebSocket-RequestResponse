@@ -1,0 +1,10 @@
+package com.datmedia.mediaplayer.androidrequestresponse;
+enum ResponseType{
+      InitialResponse = 0;
+        Confirmation = 1;
+}
+
+message ResponseContents{
+required ResponseType ResponseType = 1;
+required bytes Data = 2;
+}

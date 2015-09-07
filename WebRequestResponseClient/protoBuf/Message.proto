@@ -1,0 +1,10 @@
+package com.datmedia.mediaplayer.androidrequestresponse;
+enum MessageType{
+      EnrollmentRequest = 1;
+        EnrollmentResponse = 2;
+}
+
+message Message{
+required MessageType MessageType = 1;
+required bytes MessageContents = 2;
+}

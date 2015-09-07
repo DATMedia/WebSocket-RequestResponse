@@ -1,0 +1,11 @@
+package com.datmedia.mediaplayer.androidrequestresponse;
+enum DevicePlatform{
+         Windows = 0;
+        Android = 1;
+        Chrome = 2;
+}
+
+message InitialRequest{
+ required bytes DevicePublicKey = 1;
+ required DevicePlatform DevicePlatform = 2;
+}
